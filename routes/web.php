@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,9 +39,37 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('/','index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/','store')->name('store');
-        Route::get('/{slug}', 'edit')->name('edit');
+        Route::get('/{slug}/edit', 'edit')->name('edit');
         Route::post('/{slug}/update', 'update')->name('update');
         Route::delete('/{slug}', 'destroy')->name('destroy');
+    });
+
+    Route::prefix('books')->as('books.')->controller(BookController::class) ->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create','create')->name('create');
+        Route::post('/','store')->name('store');
+
+        
+    });
+
+    Route::prefix('medias')->as('medias.')->controller(MediaController::class)->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create','create')->name('create');
+        Route::post('/','store')->name('store');
+        Route::get('/{slug}/edit', 'edit')->name('edit');
+        Route::post('/{slug}/update', 'update')->name('update');
+        Route::delete('/{slug}', 'destroy')->name('destroy');
+
+    });
+
+    Route::prefix("teams")->as('teams.')->controller(TeamController::class)->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create','create')->name('create');
+        Route::post('/','store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/{id}/update', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+
     });
 
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Author;
+use App\Models\Admin\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -24,7 +25,8 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        return view("admin.author.form");
+        $countries=Country::get();
+        return view("admin.author.form" ,compact("countries"));
     }
 
     /**
@@ -50,8 +52,8 @@ class AuthorController extends Controller
     if ($request->hasFile('author_img')) {
         $image = $request->file('author_img');
         $imageName = time() . '.' . $image->getClientOriginalExtension(); // Unique filename
-        $image->move(public_path('uploads/authors'), $imageName); // Move image to folder
-        $imagePath = 'uploads/authors/' . $imageName; // Save path to DB
+        $image->move(public_path('/uploads/authors'), $imageName); // Move image to folder
+        $imagePath = '/uploads/authors/' . $imageName; // Save path to DB
     }
 
     Author::create([

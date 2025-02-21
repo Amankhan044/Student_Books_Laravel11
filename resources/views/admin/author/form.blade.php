@@ -59,6 +59,9 @@ $action=isset($row) && !empty($row)? route('admin.authors.update',$row->slug):ro
                       <label>Country <span class="text text-red">*</span></label>
                       <select name="country" id="country" class="form-control select2" style="width: 100%;">
                         <option value="none">-- Select Country --</option>
+                        @foreach($countries as $country)  
+                        <option value="{{ $country->id }}" {{ old('country', isset($row) && !empty($row) ? $row->country : null) == $country->id ? "selected" : "" }}>{{ $country->name }}</option>
+                        @endforeach
                       </select>
                     </div>
  

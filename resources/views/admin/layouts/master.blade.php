@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="/assets/admin/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="/assets/admin/dist/css/skins/_all-skins.min.css">
+  <!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -65,13 +67,13 @@
           <!-- Tasks: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="assets/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="/assets/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs">Ayaz Ahmed Mast</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="assets/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="/assets/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   Ayaz Ahmed Mast - Web Developer
@@ -103,7 +105,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="assets/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="/assets/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Ayaz Ahmed Mast</p>
@@ -148,7 +150,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class=""><a href="{{ route('admin.authors.create') }}"><i class="fa fa-circle-o"></i> Create Author </a></li>
-                    <li class=""><a href="{{ route('admin.authors.index') }}"><i class="fa fa-circle-o"></i> View Author </a></li>
+                    <li class=""><a href="{{ route('admin.authors.index')    }}"><i class="fa fa-circle-o"></i> View Author </a></li>
                 </ul>
             </li>
             <li class=" treeview">
@@ -159,8 +161,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="#"><i class="fa fa-circle-o"></i> Create Book </a></li>
-                    <li class=""><a href="#"><i class="fa fa-circle-o"></i> View Book </a></li>
+                    <li class=""><a href="{{ route('admin.books.create') }}"><i class="fa fa-circle-o"></i> Create Book </a></li>
+                    <li class=""><a href="{{ route('admin.books.index') }}"><i class="fa fa-circle-o"></i> View Book </a></li>
                 </ul>
             </li>
             <li class=" treeview">
@@ -171,20 +173,20 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="#"><i class="fa fa-circle-o"></i> Create Media </a></li>
-                    <li class=""><a href="#"><i class="fa fa-circle-o"></i> View Media </a></li>
+                    <li class=""><a href="{{ route('admin.medias.create') }}"><i class="fa fa-circle-o"></i> Create Media </a></li>
+                    <li class=""><a href="{{ route('admin.medias.index') }}"><i class="fa fa-circle-o"></i> View Media </a></li>
                 </ul>
             </li>
             <li class=" treeview">
                 <a href="#">
-                    <i class="fa fa-user-plus"></i> <span>Webmaster</span>
+                    <i class="fa fa-user-plus"></i> <span>Team</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class=""><a href="#"><i class="fa fa-circle-o"></i> Create Webmaster </a></li>
-                    <li class=""><a href="#"><i class="fa fa-circle-o"></i> View Webmaster </a></li>
+                    <li class=""><a href="{{ route('admin.teams.create') }}"><i class="fa fa-circle-o"></i> Create Team </a></li>
+                    <li class=""><a href="{{ route('admin.teams.index') }}"><i class="fa fa-circle-o"></i> View Team </a></li>
                 </ul>
             </li>
         </ul>
@@ -211,6 +213,10 @@
 <script src="/assets/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="/assets/admin/dist/js/app.min.js"></script>
 <script src="/assets/admin/dist/js/demo.js"></script>
+<!-- jQuery & DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 
 </body>
 </html>

@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('madia', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();                        
             $table->string('title');              
             $table->string('slug');               
             $table->string('media_type');         
-            $table->string('media_img');          
+            $table->string('media_img')->nullable()->change();          
             $table->text('description');          
             $table->string('status');             
             $table->timestamps();
