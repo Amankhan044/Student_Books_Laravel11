@@ -6,15 +6,46 @@ use App\Models\Admin\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class MediaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {  
-        $records=Media::latest()->paginate(10);
+        if ($request->ajax()) {
+            $data = Media::select(['id', 'title', 'media_type', 'media_img', 'status', 'slug']);
+            
+            return DataTables::of($data)
+                ->addColumn('media_img', function ($row) {
+                    return $row->media_img
+                        ? '<img src="' . asset($row->media_img) . '" width="50" height="50">'
+                        : 'No Image';
+                })
+                ->addColumn('status', function ($row) {
+                    return $row->status == 1
+                        ? '<button class="btn btn-info btn-sm"><i class="fa fa-thumbs-up"></i></button>'
+                        : '<button class="btn btn-danger btn-sm"><i class="fa fa-thumbs-down"></i></button>';
+                })
+                ->addColumn('action', function ($row) {
+                    return '
+                        <a href="'. route("admin.medias.edit", $row->slug) .'" class="btn btn-info btn-flat btn-sm">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <form action="'. route("admin.medias.destroy", $row->slug) .'" method="POST" style="display:inline;">
+                            ' . csrf_field() . method_field("DELETE") . '
+                            <button type="submit" class="btn btn-danger btn-flat btn-sm" onclick="return confirm(\'Are you sure?\')">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </form>';
+                })
+                ->rawColumns(['media_img', 'status', 'action'])
+                ->make(true);
+        }
+        $records=Media::latest();
         return view('admin.media.index', compact('records'));
     }
 

@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +20,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });   
+
+Route::controller(HomeController::class)->group(function () {
+    
+    Route::get('/', 'index')->name('home');
+    Route::get('/about-us', 'about')->name('about');
+    Route::get('/gallery', 'gallery')->name('gallery');
+    Route::get('/author', 'author')->name('author');
+    Route::get('/contact', 'contact')->name('contact');
 });
+
+
+
 
 Route::prefix('admin')->as('admin.')->group(function () {
 
@@ -48,8 +62,9 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('/','index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/','store')->name('store');
-
-        
+        Route::get('/{slug}/edit', 'edit')->name('edit');
+        Route::post('/{slug}/update', 'update')->name('update');
+        Route::delete('/{slug}', 'destroy')->name('destroy');
     });
 
     Route::prefix('medias')->as('medias.')->controller(MediaController::class)->group(function(){
@@ -63,6 +78,15 @@ Route::prefix('admin')->as('admin.')->group(function () {
     });
 
     Route::prefix("teams")->as('teams.')->controller(TeamController::class)->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create','create')->name('create');
+        Route::post('/','store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::post('/{id}/update', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy');
+
+    });
+    Route::prefix("users")->as('users.')->controller(UserController::class)->group(function(){
         Route::get('/','index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/','store')->name('store');

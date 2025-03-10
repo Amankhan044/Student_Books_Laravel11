@@ -25,18 +25,18 @@ Manage Author
                             <a class="btn btn-danger btn-xm"><i class="fa fa-trash"></i></a>
                             <a href="{{ route('admin.authors.create') }}" class="btn btn-default btn-xm"><i class="fa fa-plus"></i></a>
                         </h3>
-                        <div class="box-tools">
+                        <!-- <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 250px;">
                                 <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
                                 <div class="input-group-btn">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered author-table">
                             <thead style="background-color: #F8F8F8;">
                                 <tr>
                                     <th width="4%"><input type="checkbox" name="" id="checkAll"></th>
@@ -47,7 +47,7 @@ Manage Author
                                     <th width="10%">Manage</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <!-- <tbody>
                                 @foreach ($records as $row )
                                 <tr>
                                 <td><input type="checkbox" name="" id="" class="checkSingle"></td>
@@ -80,11 +80,11 @@ Manage Author
                             </tr>
                                 @endforeach
                             </tbody>
-                           
+                            -->
                         </table>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer clearfix">
+                    <!-- <div class="box-footer clearfix">
                         <div class="row">
                             <div class="col-sm-6">
                                 <span style="display:block;font-size:15px;line-height:34px;margin:20px 0;">
@@ -104,9 +104,30 @@ Manage Author
 								</ul>
                         	</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- /.box-body -->
         </div>
+
+@endsection
+
+@section("js")
+<script>
+    $(document).ready(function() {
+        $('.author-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.authors.index') }}",
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'title', name: 'title' },
+                { data: 'designation', name: 'designation' },
+                { data: 'author_img', name: 'author_img', orderable: false, searchable: false },
+                { data: 'status', name: 'status', orderable: false, searchable: false },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ]
+        });
+    });
+</script>
 
 @endsection

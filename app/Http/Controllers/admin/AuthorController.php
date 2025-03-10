@@ -8,17 +8,51 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class AuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $records=Author::latest()->paginate(10);
-        return view("admin.author.index", compact("records"));
+
+
+public function index(Request $request)
+{
+    if ($request->ajax()) {
+        $data = Author::latest()->select(['id', 'title', 'designation', 'author_img', 'status']);
+        return DataTables::eloquent($data)
+            ->addColumn('author_img', function ($row) {
+                return $row->author_img 
+                    ? '<img src="' . asset($row->author_img) . '" width="50" height="50">'
+                    : 'No Image';
+            })
+            ->addColumn('status', function ($row) {
+                return $row->status == 1 
+                    ? '<button class="btn btn-info btn-sm"><i class="fa fa-thumbs-up"></i></button>'
+                    : '<button class="btn btn-danger btn-sm"><i class="fa fa-thumbs-down"></i></button>';
+            })
+            ->addColumn('action', function ($row) {
+                return '
+                    <a href="'. route("admin.authors.edit", $row->id) .'" class="btn btn-info btn-flat btn-sm">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <form action="'. route("admin.authors.destroy", $row->id) .'" method="POST" style="display:inline;">
+                        ' . csrf_field() . method_field("DELETE") . '
+                        <button type="submit" class="btn btn-danger btn-flat btn-sm" onclick="return confirm(\'Are you sure?\')">
+                            <i class="fa fa-trash-o"></i>
+                        </button>
+                    </form>';
+            })
+            ->rawColumns(['author_img', 'status', 'action'])
+            ->make(true);
     }
+
+    $records=Author::latest();
+    return view("admin.author.index", compact("records"));
+}
+
 
     /**
      * Show the form for creating a new resource.

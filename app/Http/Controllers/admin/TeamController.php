@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Team;
+use Yajra\DataTables\Facades\DataTables;
+
 
 use Illuminate\Http\Request;
 
@@ -11,11 +13,41 @@ class TeamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $teams=Team::latest()->paginate(10);
+        if ($request->ajax()) {
+            $teams = Team::query();
+    
+            return DataTables::eloquent($teams)
+                ->addColumn('team_img', function ($team) {
+                    if ($team->team_img) {
+                        return '<img src="' . asset($team->team_img) . '" style="height:50px; width:50px; border-radius:5px;">';
+                    }
+                    return 'No Image';
+                })
+                ->addColumn('status', function ($team) {
+                    return $team->status == 1 
+                        ? '<button class="btn btn-info btn-sm"><i class="fa fa-thumbs-up"></i></button>' 
+                        : '<button class="btn btn-danger btn-sm"><i class="fa fa-thumbs-down"></i></button>';
+                })
+                ->addColumn('action', function ($team) {
+                    return '<a href="' . route('admin.teams.edit', $team->id) . '" class="btn btn-info btn-sm">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <form action="' . route('admin.teams.destroy', $team->id) . '" method="POST" style="display:inline;">
+                                ' . csrf_field() . method_field("DELETE") . '
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this?\')">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>';
+                })
+                ->rawColumns(['team_img', 'status', 'action'])
+                ->make(true);
+        }
+        $teams=Team::latest();
         return view("admin.team.index",compact("teams"));
     }
+    
 
     /**
      * Show the form for creating a new resource.

@@ -1,5 +1,8 @@
 @extends('admin.layouts.master')
+@section('page-title')
+Manage Book
 
+@endsection
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -23,9 +26,9 @@
                     <a class="btn btn-danger btn-xm"><i class="fa fa-eye"></i></a>
                     <a class="btn btn-danger btn-xm"><i class="fa fa-eye-slash"></i></a>
                     <a class="btn btn-danger btn-xm"><i class="fa fa-trash"></i></a>
-                    <a class="btn btn-default btn-xm"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-default btn-xm" href="{{ route('admin.books.create') }}"><i class="fa fa-plus"></i></a>
               </h3>
-              <div class="box-tools">
+              <!-- <div class="box-tools">
                 <div class="input-group input-group-sm" style="width: 250px;">
                   <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
@@ -33,11 +36,11 @@
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table table-bordered">
+              <table class="table table-bordered book-table ">
                 <thead style="background-color: #F8F8F8;">
                   <tr>
                     <th width="4%"><input type="checkbox" name="" id="checkAll"></th>
@@ -49,25 +52,11 @@
                     <th width="10%">Manage</th>
                   </tr>
                 </thead>
-                <tr>
-                  <td><input type="checkbox" name="" id="" class="checkSingle"></td>
-                  <td>Title</td>
-                  <td>Designation</td>
-                  <td>Image</td>
-                  <td>Image</td>
-                  <td>
-                    <button class="btn btn-danger btn-sm"><i class="fa fa-thumbs-down"></i></button>
-                    <button class="btn btn-info btn-sm"><i class="fa fa-thumbs-up"></i></button>
-                  </td>
-                  <td>
-                      <a href="#" class="btn btn-info btn-flat btn-sm"> <i class="fa fa-edit"></i></a>
-                      <button class="btn btn-danger btn-flat btn-sm"> <i class="fa fa-trash-o"></i></button>
-                  </td>
-                </tr>
+                
             </table>
             </div>
             <!-- /.box-body -->
-              <div class="box-footer clearfix">
+              <!-- <div class="box-footer clearfix">
                         <div class="row">
                             <div class="col-sm-6">
                                 <span style="display:block;font-size:15px;line-height:34px;margin:20px 0;">
@@ -86,7 +75,7 @@
                 </ul>
                           </div>
                         </div>
-                    </div>
+                    </div> -->
           </div>
             <!-- /.box-body -->
           </div>
@@ -96,5 +85,27 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+@endsection
+
+@section('js')
+<script>
+    $(document).ready(function() {
+        $('.book-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('admin.books.index') }}",
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'title', name: 'title' },
+                { data: 'author', name: 'author' },
+                { data: 'category', name: 'category' },
+                { data: 'book_img', name: 'book_img', orderable: false, searchable: false },
+                { data: 'status', name: 'status', orderable: false, searchable: false },
+                { data: 'action', name: 'action', orderable: false, searchable: false }
+            ]
+        });
+    });
+</script>
 
 @endsection

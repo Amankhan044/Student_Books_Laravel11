@@ -10,8 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="/assets/admin/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="/assets/admin/dist/css/skins/_all-skins.min.css">
-  <!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -125,8 +124,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Create User </a></li>
-                    <li class=""><a href="#"><i class="fa fa-circle-o"></i> View User </a></li>
+                    <li class="active"><a href="{{ route('admin.users.create') }}"><i class="fa fa-circle-o"></i> Create User </a></li>
+                    <li class=""><a href="{{ route('admin.users.index') }}"><i class="fa fa-circle-o"></i> View User </a></li>
                 </ul>
             </li>
             <li class=" treeview">
@@ -205,34 +204,20 @@
   </footer>
  
  
-<!-- ./wrapper -->
+  <!-- ./wrapper -->
+  
+  <script src="/assets/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <script src="/assets/admin/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+  <!-- <script src="/assets/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script> -->
+  <script src="/assets/admin/dist/js/app.min.js"></script>
+  <script src="/assets/admin/dist/js/demo.js"></script>
 
-<script src="/assets/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="/assets/admin/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-<script src="/assets/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<script src="/assets/admin/dist/js/app.min.js"></script>
-<script src="/assets/admin/dist/js/demo.js"></script>
-<!-- jQuery & DataTables JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- jQuery & DataTables JS -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  
+  @yield('js')
 
-<script>
-$(document).ready(function() {
-    $('#books-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('admin.books.data') }}",
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'title', name: 'title' },
-            { data: 'author', name: 'author' },
-            { data: 'category', name: 'category' },
-            { data: 'price', name: 'price' },
-            { data: 'action', name: 'action', orderable: false, searchable: false }
-        ]
-    });
-});
-</script>
 </body>
 </html>

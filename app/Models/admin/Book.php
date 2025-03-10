@@ -4,6 +4,8 @@ namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Admin\Category;
+use App\Models\Admin\Author;
 
 class Book extends Model
 {
@@ -33,4 +35,12 @@ class Book extends Model
         'book_upload',
         'status',
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class,'category_id');
+    }
+
+    public function author(){
+        return $this->belongsTo(Author::class,'author_id');
+    }
 }

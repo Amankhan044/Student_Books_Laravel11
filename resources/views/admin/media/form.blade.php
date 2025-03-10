@@ -78,7 +78,7 @@
         <!-- /.box-body -->
         <div class="box-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="reset" class="btn btn-danger">Cancel</button>
+            <button type="reset" href="{{ route('admin.users.index') }}" class="btn btn-danger">Cancel</button>
           </div>
       </div>
       <!-- /.box -->
